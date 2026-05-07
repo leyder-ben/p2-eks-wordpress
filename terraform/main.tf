@@ -53,6 +53,11 @@ module "eks" {
       most_recent                 = true
       resolve_conflicts_on_create = "OVERWRITE"
     }
+    aws-ebs-csi-driver = {
+      most_recent                 = true
+      resolve_conflicts_on_create = "OVERWRITE"
+      service_account_role_arn    = aws_iam_role.ebs_csi.arn
+    }
   }
 
   eks_managed_node_groups = {

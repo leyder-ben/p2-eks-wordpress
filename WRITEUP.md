@@ -24,22 +24,33 @@ Three things made this rebuild meaningfully different from v1:
 ```
 p2-eks-wordpress/
 ├── terraform/
-│   ├── main.tf              # VPC, EKS cluster, IAM roles, Secrets Manager
-│   ├── providers.tf         # AWS provider configuration
-│   ├── variables.tf         # Input variables
-│   ├── outputs.tf           # Cluster endpoint, ESO role ARN, secret ARN
-│   ├── eso-serviceaccount.yaml  # ESO service account with IAM role annotation
-│   ├── secretstore.yaml     # SecretStore — points ESO at AWS Secrets Manager
-│   └── externalsecret.yaml  # ExternalSecret — maps secret keys into Kubernetes
-├── my-microservice/         # Helm chart for WordPress
-│   ├── values.yaml          # Image, service type, resources, env vars, DB config
-│   └── templates/
-│       └── deployment.yaml  # Patched to pass env block to container
-├── mysql-deployment.yaml    # MySQL deployment + ClusterIP service
-├── mysql-pvc.yaml           # 10Gi EBS-backed PersistentVolumeClaim
-├── hpa.yaml                 # HorizontalPodAutoscaler — 50% CPU threshold
-├── README.md                # Setup and deployment instructions
-└── WRITEUP.md               # Full project write-up with architecture and troubleshooting log
+│   ├── main.tf                       # VPC, EKS cluster, IAM roles, Secrets Manager
+│   ├── providers.tf                  # AWS provider configuration
+│   ├── variables.tf                  # Input variables
+│   ├── outputs.tf                    # Cluster endpoint, ESO role ARN, secret ARN
+│   ├── eso-serviceaccount.yaml       # ESO service account with IAM role annotation
+│   ├── secretstore.yaml              # SecretStore — points ESO at AWS Secrets Manager
+│   └── externalsecret.yaml           # ExternalSecret — maps secret keys into Kubernetes
+├── my-microservice/                  # Helm chart for WordPress
+│   ├── templates/
+│   │   ├── tests/
+│   │   │   └── test-connection.yaml  # Helm test hook
+│   │   ├── NOTES.txt                 # Post-install notes template
+│   │   ├── _helpers.tpl              # Helm template helpers
+│   │   ├── deployment.yaml           # Patched to pass env block to container
+│   │   ├── hpa.yaml                  # Helm-managed HPA template (disabled)
+│   │   ├── httproute.yaml            # HTTPRoute template (disabled)
+│   │   ├── ingress.yaml              # Ingress template (disabled)
+│   │   ├── service.yaml              # Service template
+│   │   └── serviceaccount.yaml       # ServiceAccount template (disabled)
+│   ├── .helmignore                   # Files excluded from Helm packaging
+│   ├── Chart.yaml                    # Chart metadata
+│   └── values.yaml                   # Image, service type, resources, env vars, DB config
+├── mysql-deployment.yaml             # MySQL deployment + ClusterIP service
+├── mysql-pvc.yaml                    # 10Gi EBS-backed PersistentVolumeClaim
+├── hpa.yaml                          # HorizontalPodAutoscaler — 50% CPU threshold
+├── README.md                         # Setup and deployment instructions
+└── WRITEUP.md                        # Full project write-up with architecture and troubleshooting log
 ```
 
 ---
