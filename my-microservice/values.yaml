@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: wordpress
+  pullPolicy: IfNotPresent
+  tag: latest
+
+service:
+  type: LoadBalancer
+  port: 80
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 768Mi
+  requests:
+    cpu: 300m
+    memory: 384Mi
+
+env:
+  - name: WORDPRESS_DB_HOST
+    value: mysql-service
+  - name: WORDPRESS_DB_USER
+    valueFrom:
+      secretKeyRef:
+        name: mysql-secret
+        key: mysql-user
+  - name: WORDPRESS_DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: mysql-secret
+        key: mysql-password
+  - name: WORDPRESS_DB_NAME
+    valueFrom:
+      secretKeyRef:
+        name: mysql-secret
+        key: mysql-database
+
+autoscaling:
+  enabled: false
+
+ingress:
+  enabled: false
+
+serviceAccount:
+  create: false
+  name: ""
+
+httpRoute:
+  enabled: false
