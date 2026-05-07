@@ -38,7 +38,8 @@ p2-eks-wordpress/
 ├── mysql-deployment.yaml    # MySQL deployment + ClusterIP service
 ├── mysql-pvc.yaml           # 10Gi EBS-backed PersistentVolumeClaim
 ├── hpa.yaml                 # HorizontalPodAutoscaler — 50% CPU threshold
-└── WRITEUP.md
+├── README.md                # Setup and deployment instructions
+└── WRITEUP.md               # Full project write-up with architecture and troubleshooting log
 ```
 
 ---
