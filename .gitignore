@@ -1,0 +1,14 @@
+# Terraform sensitive files
+terraform.tfvars
+*.tfvars
+*.tfvars.json
+
+# Terraform state — never commit this
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Crash logs
+crash.log
+crash.*.log
